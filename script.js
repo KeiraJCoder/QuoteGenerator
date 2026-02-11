@@ -4,8 +4,8 @@ const display = document.getElementById("imageDisplay");
 button.addEventListener("click", () => {
     display.textContent = "Loading...";
 
-    fetch("https://dog.ceo/api/breeds/image/random")
-        .then(response => response.json())
+    fetch("http://api.quotable.io/random")
+        .then(res => res.json())
         .then(data => {
             const img = document.createElement("img");
             img.src = data.message;
