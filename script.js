@@ -1,34 +1,21 @@
-// Variables 
-const button = document.getElementById("fetchQuote");
-const quoteDisplay = document.getElementById("quoteDisplay");
+const button = document.getElementById("getImage");
+const display = document.getElementById("imageDisplay");
 
-// Event Listener
 button.addEventListener("click", () => {
+    display.textContent = "Loading...";
 
-    quoteDisplay.textContent = "Loading...";
-
-    fetch("http://api.quotable.io/random")
-        .then(res => res.json())
+    fetch("https://dog.ceo/api/breeds/image/random")
+        .then(response => response.json())
         .then(data => {
+            const img = document.createElement("img");
+            img.src = data.message;
+            img.alt = "Random dog";
 
-            // Create elements for quote and author
-            const quoteText = document.createElement("p");
-            quoteText.textContent = `"${data.content}"`;
-
-            const authorText = document.createElement("p");
-            authorText.textContent = `— ${data.author}`;
-
-            // Clear previous content
-            quoteDisplay.innerHTML = "";
-
-            // Add both elements to the page
-            quoteDisplay.appendChild(quoteText);
-            quoteDisplay.appendChild(authorText);
-
+            display.innerHTML = "";
+            display.appendChild(img);
         })
         .catch(error => {
-            quoteDisplay.textContent = "Something went wrong.";
-            console.error("Error fetching the quote:", error);
+            display.textContent = "Something went wrong. Please try again.";
+            console.log("Fetch error", error);
         });
-
 });
